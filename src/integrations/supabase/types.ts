@@ -14,16 +14,214 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      menu_items: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          image_url: string
+          is_veg: boolean
+          name: string
+          price: number
+          restaurant_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          id?: string
+          image_url: string
+          is_veg?: boolean
+          name: string
+          price: number
+          restaurant_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string
+          is_veg?: boolean
+          name?: string
+          price?: number
+          restaurant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "menu_items_restaurant_id_fkey"
+            columns: ["restaurant_id"]
+            isOneToOne: false
+            referencedRelation: "restaurants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          address: string
+          city: string
+          courier_id: string | null
+          created_at: string
+          customer_id: string
+          delivery_mode: string
+          id: string
+          items: Json
+          phone: string
+          restaurant_id: string | null
+          state: string
+          status: string
+          total: number
+        }
+        Insert: {
+          address?: string
+          city?: string
+          courier_id?: string | null
+          created_at?: string
+          customer_id: string
+          delivery_mode?: string
+          id?: string
+          items?: Json
+          phone?: string
+          restaurant_id?: string | null
+          state?: string
+          status?: string
+          total?: number
+        }
+        Update: {
+          address?: string
+          city?: string
+          courier_id?: string | null
+          created_at?: string
+          customer_id?: string
+          delivery_mode?: string
+          id?: string
+          items?: Json
+          phone?: string
+          restaurant_id?: string | null
+          state?: string
+          status?: string
+          total?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_restaurant_id_fkey"
+            columns: ["restaurant_id"]
+            isOneToOne: false
+            referencedRelation: "restaurants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          address: string
+          city: string
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          is_premium: boolean
+          phone: string
+          state: string
+          vehicle_number: string | null
+        }
+        Insert: {
+          address?: string
+          city?: string
+          created_at?: string
+          email?: string
+          full_name?: string
+          id: string
+          is_premium?: boolean
+          phone?: string
+          state?: string
+          vehicle_number?: string | null
+        }
+        Update: {
+          address?: string
+          city?: string
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          is_premium?: boolean
+          phone?: string
+          state?: string
+          vehicle_number?: string | null
+        }
+        Relationships: []
+      }
+      restaurants: {
+        Row: {
+          city: string
+          created_at: string
+          cuisine: string
+          drone_enabled: boolean
+          eta_minutes: number
+          id: string
+          image_url: string
+          name: string
+          rating: number
+          state: string
+        }
+        Insert: {
+          city: string
+          created_at?: string
+          cuisine: string
+          drone_enabled?: boolean
+          eta_minutes?: number
+          id?: string
+          image_url: string
+          name: string
+          rating?: number
+          state: string
+        }
+        Update: {
+          city?: string
+          created_at?: string
+          cuisine?: string
+          drone_enabled?: boolean
+          eta_minutes?: number
+          id?: string
+          image_url?: string
+          name?: string
+          rating?: number
+          state?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "customer" | "delivery" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +348,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["customer", "delivery", "admin"],
+    },
   },
 } as const
