@@ -10,11 +10,29 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminLoginRouteImport } from './routes/admin-login'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as PartnerLoginRouteImport } from './routes/partner-login'
 import { Route as RestaurantIdRouteImport } from './routes/restaurant.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin-login',
+  path: '/admin-login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnerLoginRoute = PartnerLoginRouteImport.update({
+  id: '/partner-login',
+  path: '/partner-login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RestaurantIdRoute = RestaurantIdRouteImport.update({
@@ -25,27 +43,46 @@ const RestaurantIdRoute = RestaurantIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin-login': typeof AdminLoginRoute
+  '/auth': typeof AuthRoute
+  '/partner-login': typeof PartnerLoginRoute
   '/restaurant/$id': typeof RestaurantIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin-login': typeof AdminLoginRoute
+  '/auth': typeof AuthRoute
+  '/partner-login': typeof PartnerLoginRoute
   '/restaurant/$id': typeof RestaurantIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin-login': typeof AdminLoginRoute
+  '/auth': typeof AuthRoute
+  '/partner-login': typeof PartnerLoginRoute
   '/restaurant/$id': typeof RestaurantIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/restaurant/$id'
+  fullPaths:
+    '/' | '/admin-login' | '/auth' | '/partner-login' | '/restaurant/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/restaurant/$id'
-  id: '__root__' | '/' | '/restaurant/$id'
+  to: '/' | '/admin-login' | '/auth' | '/partner-login' | '/restaurant/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin-login'
+    | '/auth'
+    | '/partner-login'
+    | '/restaurant/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AuthRoute: typeof AuthRoute
+  PartnerLoginRoute: typeof PartnerLoginRoute
   RestaurantIdRoute: typeof RestaurantIdRoute
 }
 
@@ -56,6 +93,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin-login': {
+      id: '/admin-login'
+      path: '/admin-login'
+      fullPath: '/admin-login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partner-login': {
+      id: '/partner-login'
+      path: '/partner-login'
+      fullPath: '/partner-login'
+      preLoaderRoute: typeof PartnerLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/restaurant/$id': {
@@ -70,6 +128,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AuthRoute: AuthRoute,
+  PartnerLoginRoute: PartnerLoginRoute,
   RestaurantIdRoute: RestaurantIdRoute,
 }
 export const routeTree = rootRouteImport
